@@ -1,0 +1,181 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>抽奖</title>
+
+<style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        /* overflow: hidden; */
+    }
+
+    body {
+        background: url(images/body_bg.jpg) 0px 0px repeat-x;
+    }
+
+    .main_bg {
+        background: url(images/main_bg.jpg) top center no-repeat;
+        height: 1000px;
+    }
+
+    .main {
+        width: 1200px;
+        height: 1000px;
+        position: relative;
+        margin: 0 auto;
+        background-color: blue;
+        /* opacity: 0.1 */
+    }
+
+    .num_box {
+        width: 1200px;
+        height: 600px;
+        position: absolute;
+        top: 120px;
+        z-index: 8;
+        overflow: hidden;
+        text-align: center;
+        background-color: red;
+        /* opacity: 0.5 */
+    }
+
+    .num {
+        background: top center repeat-y;
+        width: 200px;
+        height: 250px;
+        float: left;
+        margin-left: 33px;
+        margin-top: 25px;
+        background-color: green;
+        overflow: hidden;
+        /* opacity: 0.5 */
+    }
+
+    .persons {
+        width: 200px;
+        height: 2500px;
+        background-color: yellow
+    }
+
+    .person {
+        width: 200px;
+        height: 250px;
+    }
+
+    .btn {
+        background: url(images/btn_start.png);
+        margin: 0 auto;
+        margin-top: 750px;
+        width: 264px;
+        height: 89px;
+        z-index: 9999
+    }
+</style>
+
+<body>
+    <div class="main_bg">
+        <div class="main">
+            <div id="res" style="text-align:center;color:#fff;padding-top:15px;"></div>
+            <div class="num_box">
+                <div class="num">
+                    <div class="persons">
+                        <div class="person">
+                            <div>
+                                11111
+                            </div>
+                        </div>
+                        <div class="person">
+                            <div>
+                                22222
+                            </div>
+                        </div>
+                        <div class="person">
+                            <div>
+                                33333
+                            </div>
+                        </div>
+                        <div class="person">
+                            <div>
+                                44444
+                            </div>
+                        </div>
+                        <div class="person">
+                            <div>
+                                55555
+                            </div>
+                        </div>
+                        <div class="person">
+                            <div>
+                                66666
+                            </div>
+                        </div>
+                        <div class="person">
+                            <div>
+                                77777
+                            </div>
+                        </div>
+                        <div class="person">
+                            <div>
+                                88888
+                            </div>
+                        </div>
+                        <div class="person">
+                            <div>
+                                99999
+                            </div>
+                        </div>
+                        <div class="person">
+                            <div>
+                                00000
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+                <div class="num"></div>
+            </div>
+            <div class="btn"></div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/easing.js"></script>
+<script>
+    function randomID() {
+        var randNum = Math.floor(Math.random() * 10);
+        return randNum;
+    }
+    var isBegin = false;
+    $(function () {
+        var personDivHeight = 250;
+        $('.btn').click(function () {
+            if (isBegin) return false;
+            isBegin = true;
+            $(".persons").css('margin-top', 0);
+            var result = randomID();
+
+            var _num = $(".persons");
+
+            _num.animate({
+                marginTop: -personDivHeight*result - 2500 * 10
+            }, {
+                    duration: 6000 + result * 3000,
+                    easing: "easeInOutCirc",
+                    complete: function () {
+
+                    }
+                });
+        });
+
+    });
+</script>
