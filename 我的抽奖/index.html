@@ -47,15 +47,15 @@
         float: left;
         margin-left: 33px;
         margin-top: 25px;
-        background-color: green;
+        background-color: white;
         overflow: hidden;
         /* opacity: 0.5 */
     }
 
     .persons {
         width: 200px;
-        height: 2500px;
-        background-color: yellow
+        /* height: 2500px; */
+        background-color: white
     }
 
     .person {
@@ -79,55 +79,36 @@
             <div id="res" style="text-align:center;color:#fff;padding-top:15px;"></div>
             <div class="num_box">
                 <div class="num">
-                    <div class="persons">
+                    <div class="persons" id="person1">
                         <div class="person">
                             <div>
-                                11111
+                                <img width="200px" height="200px" src="img/slot1.png" />
+                                <div style="height:50px;text-align:center">1 王树伦 DM02154</div>
                             </div>
                         </div>
                         <div class="person">
                             <div>
-                                22222
+                                <img width="200px" height="250px" src="img/slot2.png" />
                             </div>
                         </div>
                         <div class="person">
                             <div>
-                                33333
+                                <img width="200px" height="250px" src="img/slot3.png" />
                             </div>
                         </div>
                         <div class="person">
                             <div>
-                                44444
+                                <img width="200px" height="250px" src="img/slot4.png" />
                             </div>
                         </div>
                         <div class="person">
                             <div>
-                                55555
+                                <img width="200px" height="250px" src="img/slot5.png" />
                             </div>
                         </div>
                         <div class="person">
                             <div>
-                                66666
-                            </div>
-                        </div>
-                        <div class="person">
-                            <div>
-                                77777
-                            </div>
-                        </div>
-                        <div class="person">
-                            <div>
-                                88888
-                            </div>
-                        </div>
-                        <div class="person">
-                            <div>
-                                99999
-                            </div>
-                        </div>
-                        <div class="person">
-                            <div>
-                                00000
+                                <img width="200px" height="250px" src="img/slot6.png" />
                             </div>
                         </div>
                     </div>
@@ -150,6 +131,9 @@
 </html>
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/easing.js"></script>
+<link rel="stylesheet" href="slotMachine/jquery.slotmachine.css" type="text/css" media="screen" />
+<script src="slotMachine/jquery.slotmachine.js"></script>
+<script src="js/data.js"></script>
 <script>
     function randomID() {
         var randNum = Math.floor(Math.random() * 10);
@@ -157,25 +141,46 @@
     }
     var isBegin = false;
     $(function () {
-        var personDivHeight = 250;
-        $('.btn').click(function () {
-            if (isBegin) return false;
-            isBegin = true;
-            $(".persons").css('margin-top', 0);
-            var result = randomID();
-
-            var _num = $(".persons");
-
-            _num.animate({
-                marginTop: -personDivHeight*result - 2500 * 10
-            }, {
-                    duration: 6000 + result * 3000,
-                    easing: "easeInOutCirc",
-                    complete: function () {
-
-                    }
-                });
+        var personHtml = serializePersonHtml()
+        addPersonHtml2Unit(personHtml);
+        var machine1 = $("#person1").slotMachine({
+            active: 0,
+            delay: 1000,
+            stopHidden: false,
+            direction: 'up'
         });
+        $(".btn").click(function () {
+            if (!isBegin) {
+                //machine1.direction = 'up';
+                machine1.futureActive = 3;
+                machine1.shuffle();
+                isBegin = true;
+            } else {
+                machine1.stop()
+                isBegin = false;
+                console.log(machine1.active + 1)
+            }
 
+        });
     });
+
+    //初始化人员DIV长条
+    function serializePersonHtml() {
+        var personsHtml = '';
+        for (let index = 0; index < data.length; index++) {
+            const p = data[index]
+            console.log(p.id + p.name + p.jobNo)
+            personsHtml += '<div class="person"><div><img width="200px" height="200px" src="photo/' + p.id + p.name + '.jpg" />' +
+                +'<div style="height:50px;text-align:center">' + p.id + p.name + p.jobNo + '</div></div></div>'
+        }
+        return personsHtml
+    }
+
+    //给每个格子加入HTML
+    function addPersonHtml2Unit(personHtml) {
+        $('.num').each(function(index,element){
+            $(element).html(personHtml)
+        })
+    }
+
 </script>
