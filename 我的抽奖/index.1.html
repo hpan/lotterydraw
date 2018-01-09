@@ -65,8 +65,8 @@
 
     .btn {
         background: url(images/btn_start.png);
-        margin: 0 auto;
-        margin-top: 750px;
+        /* margin: 0 auto;
+        margin-top: 750px; */
         width: 264px;
         height: 89px;
         z-index: 9999
@@ -78,7 +78,7 @@
         height: 80px;
         float: left;
         z-index: 999;
-        padding-top:20px; 
+        padding-top: 20px;
         padding-left: 30px;
     }
 
@@ -90,8 +90,13 @@
     input.text {
         text-align: center
     }
-    #prize-count{
+
+    #prize-count {
         width: 50px;
+    }
+
+    .num_foot {
+        position: relative;
     }
 </style>
 
@@ -99,39 +104,42 @@
     <div class="main_bg">
         <div class="main">
             <div id="res" style="text-align:center;color:#fff;padding-top:15px;"></div>
-            <div class="num_box">
-            </div>
             <div>
-                <div class="setting">
-                    <select id="prize-level">
-                        <option value="-1">等级</option>
-                        <option value="0">特等奖</option>
-                        <option value="1">一等奖</option>
-                        <option value="2">二等奖</option>
-                        <option value="3">三等奖</option>
-                        <option value="4">四等奖</option>
-                        <option value="5">五等奖</option>
-                        <option value="6">阳光普照奖</option>
-                    </select>
-                    <select id="prize-detail">
-                        <option value="-1">奖品</option>
-                        <option value="电纸书Kindle" prize-level="0" prize-count="2">电纸书Kindle</option>
-                        <option value="MK钱包" prize-level="1" prize-count="4">MK钱包</option>
-                        <option value="小米净化器" prize-level="1" prize-count="2">小米净化器</option>
-                        <option value="移动硬盘" prize-level="2" prize-count="5">移动硬盘</option>
-                        <option value="电动牙刷" prize-level="2" prize-count="5">电动牙刷</option>
-                        <option value="护肤品" prize-level="3" prize-count="6">护肤品</option>
-                        <option value="耳麦" prize-level="3" prize-count="4">耳麦</option>
-                        <option value="键盘" prize-level="4" prize-count="5">键盘</option>
-                        <option value="电饭锅" prize-level="4" prize-count="6">电饭锅</option>
-                        <option value="飞利浦剃须刀" prize-level="4" prize-count="4">飞利浦剃须刀</option>
-                        <option value="充电宝" prize-level="5" prize-count="10">充电宝</option>
-                        <option value="蓝牙耳机" prize-level="5" prize-count="5">蓝牙耳机</option>
-                        <option value="现金红包" prize-level="6" prize-count="64">现金红包</option>
-                    </select>
-                    <input id="prize-count" text-align:center; value="10" /> <span style="color:gray">奖品数量</span>
+                <div class="num_box">
                 </div>
-                <div class="btn"></div>
+                <div class="num_foot">
+                    <div class="setting">
+                        <select id="prize-level">
+                            <option value="-1">等级</option>
+                            <option value="0">特等奖</option>
+                            <option value="1">一等奖</option>
+                            <option value="2">二等奖</option>
+                            <option value="3">三等奖</option>
+                            <option value="4">四等奖</option>
+                            <option value="5">五等奖</option>
+                            <option value="6">阳光普照奖</option>
+                        </select>
+                        <select id="prize-detail">
+                            <option value="-1">奖品</option>
+                            <option value="电纸书Kindle" prize-level="0" prize-count="2">电纸书Kindle</option>
+                            <option value="MK钱包" prize-level="1" prize-count="4">MK钱包</option>
+                            <option value="小米净化器" prize-level="1" prize-count="2">小米净化器</option>
+                            <option value="移动硬盘" prize-level="2" prize-count="5">移动硬盘</option>
+                            <option value="电动牙刷" prize-level="2" prize-count="5">电动牙刷</option>
+                            <option value="护肤品" prize-level="3" prize-count="6">护肤品</option>
+                            <option value="耳麦" prize-level="3" prize-count="4">耳麦</option>
+                            <option value="键盘" prize-level="4" prize-count="5">键盘</option>
+                            <option value="电饭锅" prize-level="4" prize-count="6">电饭锅</option>
+                            <option value="飞利浦剃须刀" prize-level="4" prize-count="4">飞利浦剃须刀</option>
+                            <option value="充电宝" prize-level="5" prize-count="10">充电宝</option>
+                            <option value="蓝牙耳机" prize-level="5" prize-count="5">蓝牙耳机</option>
+                            <option value="现金红包" prize-level="6" prize-count="64">现金红包</option>
+                        </select>
+                        <input id="prize-count" text-align:center; value="10" />
+                        <span style="color:gray">奖品数量</span>
+                    </div>
+                    <div class="btn"></div>
+                </div>
             </div>
         </div>
         <div id="winners">
@@ -143,6 +151,8 @@
 
 </html>
 <script src="js/jquery-1.11.3.min.js"></script>
+<script src="bootstrap-3.3.7/js/bootstrap.js"></script>
+<link src="bootstrap-3.3.7/css/bootstrap.min.css" />
 <script src="js/easing.js"></script>
 <link rel="stylesheet" href="slotMachine/jquery.slotmachine.css" type="text/css" media="screen" />
 <script src="slotMachine/jquery.slotmachine.js"></script>
