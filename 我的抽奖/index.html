@@ -24,7 +24,7 @@
         height: 1000px;
         position: relative;
         margin: 0 auto;
-        background-color: blue;
+        /* background-color: blue; */
         /* opacity: 0.1 */
     }
 
@@ -36,7 +36,7 @@
         z-index: 8;
         overflow: hidden;
         text-align: center;
-        background-color: red;
+        /* background-color: red; */
         /* opacity: 0.5 */
     }
 
@@ -78,41 +78,7 @@
         <div class="main">
             <div id="res" style="text-align:center;color:#fff;padding-top:15px;"></div>
             <div class="num_box">
-                <div class="num">
-                    <div class="persons" id="person1">
-                        <div class="person">
-                            <div>
-                                <img width="200px" height="200px" src="img/slot1.png" />
-                                <div style="height:50px;text-align:center">1 王树伦 DM02154</div>
-                            </div>
-                        </div>
-                        <div class="person">
-                            <div>
-                                <img width="200px" height="250px" src="img/slot2.png" />
-                            </div>
-                        </div>
-                        <div class="person">
-                            <div>
-                                <img width="200px" height="250px" src="img/slot3.png" />
-                            </div>
-                        </div>
-                        <div class="person">
-                            <div>
-                                <img width="200px" height="250px" src="img/slot4.png" />
-                            </div>
-                        </div>
-                        <div class="person">
-                            <div>
-                                <img width="200px" height="250px" src="img/slot5.png" />
-                            </div>
-                        </div>
-                        <div class="person">
-                            <div>
-                                <img width="200px" height="250px" src="img/slot6.png" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="num"></div>
                 <div class="num"></div>
                 <div class="num"></div>
                 <div class="num"></div>
@@ -135,6 +101,7 @@
 <script src="slotMachine/jquery.slotmachine.js"></script>
 <script src="js/data.js"></script>
 <script>
+
     function randomID() {
         var randNum = Math.floor(Math.random() * 10);
         return randNum;
@@ -143,44 +110,84 @@
     $(function () {
         var personHtml = serializePersonHtml()
         addPersonHtml2Unit(personHtml);
-        var machine1 = $("#person1").slotMachine({
-            active: 0,
-            delay: 1000,
-            stopHidden: false,
-            direction: 'up'
-        });
+        serializeMachine();
         $(".btn").click(function () {
             if (!isBegin) {
-                //machine1.direction = 'up';
-                machine1.futureActive = 3;
-                machine1.shuffle();
-                isBegin = true;
+                scrollMachine()
+                isBegin = true
+                getRandomByCount(10)
             } else {
-                machine1.stop()
-                isBegin = false;
-                console.log(machine1.active + 1)
+                stopMachine()
+                isBegin = false
             }
-
         });
     });
 
     //初始化人员DIV长条
     function serializePersonHtml() {
-        var personsHtml = '';
+        var personsHtml = '<div class="persons" id="person1">';
         for (let index = 0; index < data.length; index++) {
             const p = data[index]
-            console.log(p.id + p.name + p.jobNo)
-            personsHtml += '<div class="person"><div><img width="200px" height="200px" src="photo/' + p.id + p.name + '.jpg" />' +
-                +'<div style="height:50px;text-align:center">' + p.id + p.name + p.jobNo + '</div></div></div>'
+            //console.log(p.id + p.name + p.jobNo)
+            personsHtml += '<div class="person"><div><img width="200px" height="200px" src="photo/' + p.id + p.name + '.jpg" />'
+                + '<div style="height:50px;text-align:center">' + p.id + p.name + p.jobNo + '</div></div></div>'
         }
+        personsHtml += '</div>'
         return personsHtml
     }
 
     //给每个格子加入HTML
     function addPersonHtml2Unit(personHtml) {
-        $('.num').each(function(index,element){
+        $('.num').each(function (index, element) {
             $(element).html(personHtml)
         })
+    }
+
+    var machines = [];
+    //初始化老虎机
+    function serializeMachine() {
+        $(".persons").each(function (index, element) {
+            var machine = $(element).slotMachine({
+                active: 0,
+                delay: 1000,
+                stopHidden: false,
+                direction: 'up'
+            });
+            machines.push(machine)
+        })
+    }
+
+    //翻滚吧
+    function scrollMachine() {
+        machines.forEach(m => {
+            m.shuffle()
+        });
+    }
+
+    //停止翻滚
+    function stopMachine() {
+        var index = 0
+        machines.forEach(m => {
+            setTimeout(function () {
+                m.stop()
+            }, 1000 * index)
+            index++
+        });
+    }
+
+    var persons = data;
+    var winners = [];
+    //抽人
+    function getRandomByCount(count) {
+        while (count--) {
+            var arrIndex = Math.floor(Math.random()*persons.length);
+            winners.push(persons[arrIndex])
+            persons.splice(arrIndex, 1);
+            console.log(count)
+            if (count == 0) break;
+        }
+        console.log(JSON.stringify(winners))
+        console.log(JSON.stringify(persons))
     }
 
 </script>
