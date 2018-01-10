@@ -160,13 +160,21 @@
         width: 150px;
         height: 150px;
     }
-    .top_middle{
-        width: 500px;
+
+    .top_middle {
+        width: 800px;
+        height: 150px;
         margin: 0 auto;
         font-size: 28px;
         color: red;
+        position: absolute;
+        left: 50%;
+        margin-top: 30px;
+        margin-left: -400px;
+        background-image: url(images/top_title.png)
     }
-    .top_middle>span{
+
+    .top_middle>span {
         margin-top: 50px;
     }
 </style>
@@ -176,8 +184,8 @@
         <div class="top_head">
             <img id="top_left" src="images/lantern-left.png" />
             <div class="top_middle">
-                <span>2017 感谢有你</span>
-                <span>2018 一路同行</span>
+                <!-- <span>2017 感谢有你</span>
+                <span>2018 一路同行</span> -->
             </div>
             <img id="top_right" src="images/lantern-right.png" />
         </div>
@@ -252,6 +260,12 @@
         </div>
     </div>
 </body>
+<audio id="runingmic" class="hide" loop>
+    <source src=".\music\runing.wav">
+</audio>
+<audio id="pausemic" class="hide">
+    <source src=".\music\stop.mp3">
+</audio>
 
 </html>
 <script src="js/jquery-1.11.3.min.js"></script>
@@ -264,9 +278,7 @@
     var tempRandom = [];
     var personHtml = "";
     function initMachine(count) {
-        reloadJs("slotjs")
         initPage(count)
-        //var personHtml = serializePersonHtml()
         addPersonHtml2Unit(personHtml)
     }
 
@@ -290,13 +302,14 @@
                 isBegin = true
                 $(this).css("background-image", "url(images/btn_stop.png)")
                 tempRandom = randoms;
-
+                runningAudio()
             } else {
                 stopMachine()
                 isBegin = false
                 $(this).css("background-image", "url(images/btn_start.png)")
                 showPanel(tempRandom)
                 tempRandom = [];
+                stoppedAudio()
             }
         });
 
@@ -322,11 +335,12 @@
     //初始化人员DIV长条
     function serializePersonHtml() {
         var personsHtml = '<div class="persons">';
+        personsHtml += '<div class="person" id="0" style="width:200px;height:250px;background-image:url(images/cover.png)"></div>'
         for (let index = 0; index < data.length; index++) {
             var p = data[index]
             //console.log(p.id + p.name + p.jobNo)
             personsHtml += '<div class="person" id="' + p.id + '"><div><img width="200px" height="200px" src="photo/' + p.id + p.name + '.jpg" />'
-                + '<div style="height:50px;text-align:center">' + p.id + p.jobNo + ' <br/> ' + p.name + '</div></div></div>'
+                + '<div style="height:50px;text-align:center">' + p.jobNo + ' <br/> ' + p.name + '</div></div></div>'
         }
         personsHtml += '</div>'
         return personsHtml
@@ -364,7 +378,7 @@
                 delay: 1000,
                 direction: 'up',
                 randomize: function (activeElementIndex) {
-                    return randoms[index].id - 1;
+                    return randoms[index].id;
                 }
             });
             tempMachines.push(machinetemp)
@@ -375,7 +389,6 @@
     function scrollMachine(randoms) {
         var index = 0;
         tempMachines.forEach(m => {
-            //m.futureActive = randoms[index].id - 1
             m.shuffle()
             console.log(index + JSON.stringify(randoms[index]))
             index++
@@ -433,13 +446,12 @@
         return html.indexOf(prize) > -1
     }
 
-    var reloadJs = function (id) {
-        var jsObj = document.getElementById(id);
-        var src = jsObj.src;
-        delete jsObj;
-        //重新加载
-        var script = document.createElement('script');
-        script.src = src;
-        document.body.appendChild(script);
-    };
+    function runningAudio() {
+        document.getElementById("runingmic").play()
+    }
+
+    function stoppedAudio() {
+        document.getElementById("runingmic").pause()
+        document.getElementById("pausemic").play()
+    }
 </script>
