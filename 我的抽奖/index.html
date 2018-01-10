@@ -178,6 +178,13 @@
     .top_middle>span {
         margin-top: 50px;
     }
+
+    .winnername>span {
+        display: inline-block;
+        margin-left: 10px;
+        margin-top: 5px;
+        width: 180px;
+    }
 </style>
 
 <body>
@@ -236,26 +243,33 @@
                 </div>
             </div>
             <div id="winners">
-                <div class="prizeDetail" id="prizeLevel0">
+                <div class="prizeDetail">
                     <label>特等奖</label>
+                    <div class="winnername" id="prizeLevel0"></div>
                 </div>
-                <div class="prizeDetail" id="prizeLevel1">
+                <div class="prizeDetail">
                     <label>一等奖</label>
+                    <div class="winnername" id="prizeLevel1"></div>
                 </div>
-                <div class="prizeDetail" id="prizeLevel2">
+                <div class="prizeDetail">
                     <label>二等奖</label>
+                    <div class="winnername" id="prizeLevel2"></div>
                 </div>
-                <div class="prizeDetail" id="prizeLevel3">
+                <div class="prizeDetail">
                     <label>三等奖</label>
-                </div class="prizeDetail">
-                <div class="prizeDetail" id="prizeLevel4">
+                    <div class="winnername" id="prizeLevel3"></div>
+                </div>
+                <div class="prizeDetail">
                     <label>四等奖</label>
+                    <div class="winnername" id="prizeLevel4"></div>
                 </div>
-                <div class="prizeDetail" id="prizeLevel5">
+                <div class="prizeDetail">
                     <label>五等奖</label>
+                    <div class="winnername" id="prizeLevel5"></div>
                 </div>
-                <div class="prizeDetail" id="prizeLevel6">
+                <div class="prizeDetail">
                     <label>阳光普照奖</label>
+                    <div class="winnername" id="prizeLevel6"></div>
                 </div>
             </div>
         </div>
@@ -315,7 +329,9 @@
                 tempRandom = [];
                 stoppedAudio()
             }
+            
         });
+
 
         //选择奖品等级、个数
         $("#prize-level").change(function () {
@@ -360,6 +376,7 @@
             pageHtml += '<div class="num"></div>'
         }
         $(".num_box").html(pageHtml)
+        $('html,body').animate({scrollTop: '0px'}, 500)
     }
 
     //给每个格子加入HTML
@@ -436,7 +453,8 @@
         var prizeDetail = $("#prize-detail").val();
         var index = 0;
         randoms.forEach(p => {
-            var html = '<span>' + p.name + '(' + prizeDetail + ')</span>'
+            var separator = p.name == 2 ? "  " : ""
+            var html = '<span>' + p.name + '(' + prizeDetail + ')' + separator + '</span>'
             setTimeout(function () {
                 $('#prizeLevel' + prizeLevel).append(html)
             }, (index + 1) * interval + 1000)
