@@ -121,7 +121,7 @@
 
     .top_head {
         /* position: absolute; */
-        width: 1500px;
+        width: 1200px;
         margin: 0 auto;
     }
 
@@ -141,7 +141,7 @@
     .waist_left {
         float: left;
         position: absolute;
-        margin-left: -130px;
+        margin-left: -30px;
         z-index: 9999;
         width: 150px;
         height: 150px;
@@ -149,10 +149,11 @@
 
     .waist_right {
         float: right;
-        margin-right: -70px;
         z-index: 9999;
         width: 150px;
         height: 150px;
+        position: absolute;
+        margin-left: 1100px;
     }
 
     .waist_left>img,
@@ -277,6 +278,7 @@
     var isBegin = false;
     var tempRandom = [];
     var personHtml = "";
+    var interval = 1000;
     function initMachine(count) {
         initPage(count)
         addPersonHtml2Unit(personHtml)
@@ -296,7 +298,9 @@
                 return
             }
             if (!isBegin) {
-                var randoms = getRandomByCount($("#prize-count").val())
+                var tempcount = $("#prize-count").val()
+                var randoms = getRandomByCount(tempcount)
+                interval = tempcount > 10 ? 0 : 1000
                 serializeMachine(randoms);
                 scrollMachine(randoms)
                 isBegin = true
@@ -402,7 +406,7 @@
             setTimeout(function () {
                 m.stop()
                 console.log(m.active)
-            }, index * 1000)
+            }, index * interval)
             index++
         });
     }
@@ -435,7 +439,7 @@
             var html = '<span>' + p.name + '(' + prizeDetail + ')</span>'
             setTimeout(function () {
                 $('#prizeLevel' + prizeLevel).append(html)
-            }, (index + 1) * 1000 + 1000)
+            }, (index + 1) * interval + 1000)
             index++
         })
     }
