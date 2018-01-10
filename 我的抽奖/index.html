@@ -1,7 +1,7 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>抽奖</title>
-
+<link rel="stylesheet" href="css/loading.css" type="text/css" />
 <style>
     html,
     body {
@@ -185,9 +185,40 @@
         margin-top: 5px;
         width: 180px;
     }
+
+    .loading {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 999999;
+        background-color: white;
+    }
+   
 </style>
 
 <body>
+    <div class="loading">
+        <div class="spinner">
+            <div class="spinner-container container1">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container2">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+            <div class="spinner-container container3">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+                <div class="circle3"></div>
+                <div class="circle4"></div>
+            </div>
+        </div>
+    </div>
     <div class="main_bg">
         <div class="top_head">
             <img id="top_left" src="images/lantern-left.png" />
@@ -289,6 +320,25 @@
 <script id="slotjs" src="slotMachine/jquery.slotmachine.js"></script>
 <script src="js/data.js"></script>
 <script>
+
+    var imgdefereds = [];
+    $('img').each(function () {
+        var dfd = $.Deferred();
+        $(this).bind('load', function () {
+            dfd.resolve();
+        }).bind('error', function () {
+            //图片加载错误，加入错误处理
+            // dfd.resolve();
+        })
+        if (this.complete) setTimeout(function () {
+            dfd.resolve();
+        }, 1000);
+        imgdefereds.push(dfd);
+    })
+    $.when.apply(null, imgdefereds).done(function () {
+        $(".loading").remove();
+    });
+
     var isBegin = false;
     var tempRandom = [];
     var personHtml = "";
@@ -301,6 +351,7 @@
     $(function () {
         personHtml = serializePersonHtml()
         initMachine(10)
+
         $(".btn").click(function () {
             var prizeDetail = $('#prize-detail').val()
             if ($('#prize-level').val() == -1 || prizeDetail == -1) {
@@ -329,7 +380,7 @@
                 tempRandom = [];
                 stoppedAudio()
             }
-            
+
         });
 
 
@@ -376,7 +427,7 @@
             pageHtml += '<div class="num"></div>'
         }
         $(".num_box").html(pageHtml)
-        $('html,body').animate({scrollTop: '0px'}, 500)
+        $('html,body').animate({ scrollTop: '0px' }, 500)
     }
 
     //给每个格子加入HTML
