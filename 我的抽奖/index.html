@@ -11,18 +11,19 @@
     }
 
     body {
-        background: url(images/body_bg.jpg) 0px 0px repeat-x;
+        background: url(images/bg_red.jpg) 0px 0px;
+        background-size: cover;
     }
 
     .main_bg {
-        background: url(images/main_bg.jpg) top center no-repeat;
-        height: 1000px;
+        /* background: url(images/main_bg.jpg) top center no-repeat; */
+        /* height: 1000px; */
     }
 
     .main {
         width: 1200px;
-        height: 1000px;
-        position: relative;
+        /* height: 1000px; */
+        /* position: relative; */
         margin: 0 auto;
         /* background-color: blue; */
         /* opacity: 0.1 */
@@ -31,8 +32,9 @@
     .num_box {
         width: 1200px;
         /* height: 600px; */
-        position: absolute;
-        top: 120px;
+        /* position: absolute; */
+        /* top: 120px; */
+        margin-top: 100px;
         z-index: 8;
         overflow: hidden;
         text-align: center;
@@ -66,7 +68,7 @@
     .btn {
         background: url(images/btn_start.png);
         margin: 0 auto;
-        margin-top: 750px;
+        margin-top: 50px;
         width: 264px;
         height: 89px;
         z-index: 9999
@@ -78,7 +80,7 @@
         height: 80px;
         float: left;
         z-index: 999;
-        padding-top:20px; 
+        padding-top: 20px;
         padding-left: 30px;
     }
 
@@ -90,8 +92,29 @@
     input.text {
         text-align: center
     }
-    #prize-count{
+
+    #prize-count {
         width: 50px;
+    }
+
+    #winners {
+        width: 1200px;
+        background: white;
+        opacity: 0.5;
+        margin-top: 20px;
+    }
+
+    .prizeDetail {
+        min-height: 100px;
+    }
+
+    .prizeDetail>label {
+        color: red;
+        font-size: 2em;
+    }
+
+    .prizeDetail>span {
+        margin-left: 20px;
     }
 </style>
 
@@ -129,16 +152,36 @@
                         <option value="蓝牙耳机" prize-level="5" prize-count="5">蓝牙耳机</option>
                         <option value="现金红包" prize-level="6" prize-count="64">现金红包</option>
                     </select>
-                    <input id="prize-count" text-align:center; value="10" /> <span style="color:gray">奖品数量</span>
+                    <span style="color:gray;margin-left:10px;">奖品数量</span>
+                    <input id="prize-count" text-align:center; value="10" readonly/>
                 </div>
                 <div class="btn"></div>
             </div>
-        </div>
-        <div id="winners">
-
+            <div id="winners">
+                <div class="prizeDetail" id="prizeLevel0">
+                    <label>特等奖</label>
+                </div>
+                <div class="prizeDetail" id="prizeLevel1">
+                    <label>一等奖</label>
+                </div>
+                <div class="prizeDetail" id="prizeLevel2">
+                    <label>二等奖</label>
+                </div>
+                <div class="prizeDetail" id="prizeLevel3">
+                    <label>三等奖</label>
+                </div class="prizeDetail">
+                <div class="prizeDetail" id="prizeLevel4">
+                    <label>四等奖</label>
+                </div>
+                <div class="prizeDetail" id="prizeLevel5">
+                    <label>五等奖</label>
+                </div>
+                <div class="prizeDetail" id="prizeLevel6">
+                    <label>阳光普照奖</label>
+                </div>
+            </div>
         </div>
     </div>
-
 </body>
 
 </html>
@@ -149,6 +192,7 @@
 <script src="js/data.js"></script>
 <script>
     var isBegin = false;
+    var tempRandom = [];
     function initMachine(count) {
         initPage(count)
         var personHtml = serializePersonHtml()
@@ -159,13 +203,27 @@
     $(function () {
         initMachine(10)
         $(".btn").click(function () {
+            var prizeDetail = $('#prize-detail').val()
+            if ($('#prize-level').val() == -1 || prizeDetail == -1) {
+                alert('请选择奖品等级和类型')
+                return
+            }
+            if (judgePrized(prizeDetail)){
+                alert(prizeDetail + "已经抽过了")
+                return
+            }
             if (!isBegin) {
                 var randoms = getRandomByCount($("#prize-count").val())
                 scrollMachine(randoms)
                 isBegin = true
+                $(this).css("background-image", "url(images/btn_stop.png)")
+                tempRandom = randoms;
             } else {
                 stopMachine()
                 isBegin = false
+                $(this).css("background-image", "url(images/btn_start.png)")
+                showPanel(tempRandom)
+                tempRandom = [];
             }
         });
 
@@ -194,7 +252,7 @@
             const p = data[index]
             //console.log(p.id + p.name + p.jobNo)
             personsHtml += '<div class="person"><div><img width="200px" height="200px" src="photo/' + p.id + p.name + '.jpg" />'
-                + '<div style="height:50px;text-align:center">' + p.id + p.name + p.jobNo + '</div></div></div>'
+                + '<div style="height:50px;text-align:center">' + p.jobNo + ' <br/> ' + p.name + '</div></div></div>'
         }
         personsHtml += '</div>'
         return personsHtml
@@ -271,4 +329,23 @@
         return randoms
     }
 
+    //获奖区域面板
+    function showPanel(randoms) {
+        var prizeLevel = $("#prize-level").val();
+        var prizeDetail = $("#prize-detail").val();
+        var index = 0;
+        randoms.forEach(p => {
+            var html = '<span>' + p.name + '(' + prizeDetail + ')</span>'
+            setTimeout(function () {
+                $('#prizeLevel' + prizeLevel).append(html)
+            }, (index + 1) * 1000 + 1000)
+            index++
+        })
+    }
+
+    //判断这种类型的奖品是否已经抽过
+    function judgePrized(prize) {
+        var html = $("#winners").html()
+        return html.indexOf(prize) > -1
+    }
 </script>
