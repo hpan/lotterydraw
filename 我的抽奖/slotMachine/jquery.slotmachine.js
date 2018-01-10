@@ -231,7 +231,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             key: 'getTileOffset',
             value: function getTileOffset(index) {
                 var offset = 0;
-
+                debugger;
                 for (var i = 0; i < index; i++) {
                     offset += this.$tiles.eq(i).outerHeight();
                 }
@@ -367,6 +367,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 this.delay = delay;
                 this._animationFX = FX_STOP;
                 this._animate(this.getTileOffset(this.active));
+                debugger
                 this.raf(function () {
                     _this2.stopping = false;
                     _this2.running = false;

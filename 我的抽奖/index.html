@@ -34,7 +34,7 @@
         /* height: 600px; */
         /* position: absolute; */
         /* top: 120px; */
-        margin-top: 100px;
+        /* margin-top: 100px; */
         z-index: 8;
         overflow: hidden;
         text-align: center;
@@ -63,6 +63,7 @@
     .person {
         width: 200px;
         height: 250px;
+        color: slategray;
     }
 
     .btn {
@@ -98,10 +99,11 @@
     }
 
     #winners {
-        width: 1200px;
+        width: 1100px;
         background: white;
         opacity: 0.5;
         margin-top: 20px;
+        padding: 50px;
     }
 
     .prizeDetail {
@@ -116,10 +118,56 @@
     .prizeDetail>span {
         margin-left: 20px;
     }
+
+    .top_head {
+        /* position: absolute; */
+        width: 1500px;
+        margin: 0 auto;
+    }
+
+    #top_left {
+        float: left;
+    }
+
+    #top_right {
+        float: right;
+    }
+
+    .waist {
+        width: 1200px;
+        height: 100px;
+    }
+
+    .waist_left {
+        float: left;
+        position: absolute;
+        margin-left: -130px;
+        z-index: 9999;
+        width: 150px;
+        height: 150px;
+    }
+
+    .waist_right {
+        float: right;
+        margin-right: -70px;
+        z-index: 9999;
+        width: 150px;
+        height: 150px;
+    }
+
+    .waist_left>img,
+    .waist_right>img {
+        width: 150px;
+        height: 150px;
+    }
 </style>
 
 <body>
     <div class="main_bg">
+        <div class="top_head">
+            <img id="top_left" src="images/lantern-left.png" />
+            <img id="top_right" src="images/lantern-right.png" />
+        </div>
         <div class="main">
             <div id="res" style="text-align:center;color:#fff;padding-top:15px;"></div>
             <div class="num_box">
@@ -137,25 +185,33 @@
                         <option value="6">阳光普照奖</option>
                     </select>
                     <select id="prize-detail">
-                        <option value="-1">奖品</option>
-                        <option value="电纸书Kindle" prize-level="0" prize-count="2">电纸书Kindle</option>
-                        <option value="MK钱包" prize-level="1" prize-count="4">MK钱包</option>
-                        <option value="小米净化器" prize-level="1" prize-count="2">小米净化器</option>
-                        <option value="移动硬盘" prize-level="2" prize-count="5">移动硬盘</option>
-                        <option value="电动牙刷" prize-level="2" prize-count="5">电动牙刷</option>
-                        <option value="护肤品" prize-level="3" prize-count="6">护肤品</option>
-                        <option value="耳麦" prize-level="3" prize-count="4">耳麦</option>
-                        <option value="键盘" prize-level="4" prize-count="5">键盘</option>
-                        <option value="电饭锅" prize-level="4" prize-count="6">电饭锅</option>
-                        <option value="飞利浦剃须刀" prize-level="4" prize-count="4">飞利浦剃须刀</option>
-                        <option value="充电宝" prize-level="5" prize-count="10">充电宝</option>
-                        <option value="蓝牙耳机" prize-level="5" prize-count="5">蓝牙耳机</option>
-                        <option value="现金红包" prize-level="6" prize-count="64">现金红包</option>
+                        <option value="-1">请选择奖品</option>
+                        <option value="电纸书Kindle" hidden prize-level="0" prize-count="2">电纸书Kindle</option>
+                        <option value="MK钱包" hidden prize-level="1" prize-count="4">MK钱包</option>
+                        <option value="小米净化器" hidden prize-level="1" prize-count="2">小米净化器</option>
+                        <option value="移动硬盘" hidden prize-level="2" prize-count="5">移动硬盘</option>
+                        <option value="电动牙刷" hidden prize-level="2" prize-count="5">电动牙刷</option>
+                        <option value="护肤品" hidden prize-level="3" prize-count="6">护肤品</option>
+                        <option value="耳麦" hidden prize-level="3" prize-count="4">耳麦</option>
+                        <option value="键盘" hidden prize-level="4" prize-count="5">键盘</option>
+                        <option value="电饭锅" hidden prize-level="4" prize-count="6">电饭锅</option>
+                        <option value="飞利浦剃须刀" hidden prize-level="4" prize-count="4">飞利浦剃须刀</option>
+                        <option value="充电宝" hidden prize-level="5" prize-count="10">充电宝</option>
+                        <option value="蓝牙耳机" hidden prize-level="5" prize-count="5">蓝牙耳机</option>
+                        <option value="现金红包" hidden prize-level="6" prize-count="64">现金红包</option>
                     </select>
                     <span style="color:gray;margin-left:10px;">奖品数量</span>
                     <input id="prize-count" text-align:center; value="10" readonly/>
                 </div>
                 <div class="btn"></div>
+            </div>
+            <div class="waist">
+                <div class="waist_left">
+                    <img src="images/jump-left.png" />
+                </div>
+                <div class="waist_right">
+                    <img src="images/jump-right.png" />
+                </div>
             </div>
             <div id="winners">
                 <div class="prizeDetail" id="prizeLevel0">
@@ -186,21 +242,23 @@
 
 </html>
 <script src="js/jquery-1.11.3.min.js"></script>
-<script src="js/easing.js"></script>
+
 <link rel="stylesheet" href="slotMachine/jquery.slotmachine.css" type="text/css" media="screen" />
-<script src="slotMachine/jquery.slotmachine.js"></script>
+<script id="slotjs" src="slotMachine/jquery.slotmachine.js"></script>
 <script src="js/data.js"></script>
 <script>
     var isBegin = false;
     var tempRandom = [];
+    var personHtml = "";
     function initMachine(count) {
+        reloadJs("slotjs")
         initPage(count)
-        var personHtml = serializePersonHtml()
+        //var personHtml = serializePersonHtml()
         addPersonHtml2Unit(personHtml)
-        serializeMachine();
     }
 
     $(function () {
+        personHtml = serializePersonHtml()
         initMachine(10)
         $(".btn").click(function () {
             var prizeDetail = $('#prize-detail').val()
@@ -208,16 +266,18 @@
                 alert('请选择奖品等级和类型')
                 return
             }
-            if (judgePrized(prizeDetail)){
+            if (judgePrized(prizeDetail)) {
                 alert(prizeDetail + "已经抽过了")
                 return
             }
             if (!isBegin) {
                 var randoms = getRandomByCount($("#prize-count").val())
+                serializeMachine(randoms);
                 scrollMachine(randoms)
                 isBegin = true
                 $(this).css("background-image", "url(images/btn_stop.png)")
                 tempRandom = randoms;
+               
             } else {
                 stopMachine()
                 isBegin = false
@@ -236,6 +296,7 @@
                     $(element).attr("hidden", "true")
                 }
             })
+            $("#prize-detail").val("-1")
         })
         $("#prize-detail").change(function () {
             var optionSelected = $(this).find("option:selected")
@@ -247,12 +308,12 @@
 
     //初始化人员DIV长条
     function serializePersonHtml() {
-        var personsHtml = '<div class="persons" id="person1">';
+        var personsHtml = '<div class="persons">';
         for (let index = 0; index < data.length; index++) {
-            const p = data[index]
+            var p = data[index]
             //console.log(p.id + p.name + p.jobNo)
-            personsHtml += '<div class="person"><div><img width="200px" height="200px" src="photo/' + p.id + p.name + '.jpg" />'
-                + '<div style="height:50px;text-align:center">' + p.jobNo + ' <br/> ' + p.name + '</div></div></div>'
+            personsHtml += '<div class="person" id="' + p.id + '"><div><img width="200px" height="200px" src="photo/' + p.id + p.name + '.jpg" />'
+                + '<div style="height:50px;text-align:center">' + p.id + p.jobNo + ' <br/> ' + p.name + '</div></div></div>'
         }
         personsHtml += '</div>'
         return personsHtml
@@ -260,6 +321,9 @@
 
     //初始化页面
     function initPage(count) {
+        tempRandom = [];
+        tempMachines = [];
+
         var pageHtml = "";
         for (let index = 0; index < count; index++) {
             pageHtml += '<div class="num"></div>'
@@ -274,27 +338,33 @@
         })
     }
 
-    var machines = [];
+    var tempMachines = [];
     //初始化老虎机
-    function serializeMachine() {
-        machines = [];
+    function serializeMachine(randoms) {
+        tempMachines.forEach((value, index, arr) => {
+            value.destroy();
+        })
+        tempMachines = [];
         $(".persons").each(function (index, element) {
-            var machine = $(element).slotMachine({
+            var machinetemp = $(element).slotMachine({
                 active: 0,
                 delay: 1000,
-                stopHidden: false,
-                direction: 'up'
+                direction: 'up',
+                randomize: function (activeElementIndex) {
+                    return randoms[index].id - 1;
+                }
             });
-            machines.push(machine)
+            tempMachines.push(machinetemp)
         })
     }
 
     //翻滚吧
     function scrollMachine(randoms) {
         var index = 0;
-        machines.forEach(m => {
+        tempMachines.forEach(m => {
+            //m.futureActive = randoms[index].id - 1
             m.shuffle()
-            m.futureActive = randoms[index].id - 1
+            console.log(index + JSON.stringify(randoms[index]))
             index++
         });
     }
@@ -302,10 +372,11 @@
     //停止翻滚
     function stopMachine() {
         var index = 0
-        machines.forEach(m => {
+        tempMachines.forEach(m => {
             setTimeout(function () {
                 m.stop()
-            }, 1000 * index)
+                console.log(m.active)
+            }, index * 1000)
             index++
         });
     }
@@ -322,10 +393,10 @@
             winners.push(nowins[arrIndex])
             randoms.push(nowins[arrIndex])
             nowins.splice(arrIndex, 1);
-            console.log(count)
+            //console.log(count)
             if (count == 0) break;
         }
-        console.log(JSON.stringify(winners))
+        //console.log(JSON.stringify(winners))
         return randoms
     }
 
@@ -348,4 +419,14 @@
         var html = $("#winners").html()
         return html.indexOf(prize) > -1
     }
+
+    var reloadJs = function (id) {
+        var jsObj = document.getElementById(id);
+        var src = jsObj.src;
+        delete jsObj;
+        //重新加载
+        var script = document.createElement('script');
+        script.src = src;
+        document.body.appendChild(script);
+    };
 </script>
